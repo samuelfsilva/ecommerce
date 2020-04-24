@@ -9,10 +9,6 @@ cep: {
     type: String,
     required: true,
 },
-rua: {
-    type: String,
-    required: true,
-},
 cidade: {
     type: String,
     required: true,
@@ -20,6 +16,10 @@ cidade: {
 uf: {
     type: String,
     required: true,
+},
+usuario: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
 },
 createdAt: {
     type: Date,

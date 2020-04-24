@@ -1,16 +1,20 @@
 const mongoose = require('../database');
 
-const CategoriaSchema = new mongoose.Schema({
-valor: {
-    type: Number,
-    required: true,
-},
-createdAt: {
-    type: Date,
-    default: Date.now,
-},
+const HistoricoValorSchema = new mongoose.Schema({
+    item: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+    },
+    valor: {
+        type: Number,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
-const Categoria = mongoose.model('Categoria', CategoriaSchema);
+const HistoricoValor = mongoose.model('HistoricoValor', HistoricoValorSchema);
 
-module.exports = Categoria;
+module.exports = HistoricoValor;

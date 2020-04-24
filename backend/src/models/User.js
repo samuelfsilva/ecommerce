@@ -6,6 +6,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    sobrenome: {
+        type: String,
+        required: true,
+    },
     email: {
         type: String,
         unique: true,
@@ -28,11 +32,6 @@ const UserSchema = new mongoose.Schema({
     passwordResetExpires: {
         type: Date,
         select: false,
-    },
-    codEndereco: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Endereco',
-        required: true,
     },
     createdAt: {
         type: Date,
