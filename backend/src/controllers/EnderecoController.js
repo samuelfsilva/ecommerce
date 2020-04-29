@@ -22,9 +22,11 @@ module.exports = {
     },
     async create(request, response) {
         try {
+            const usuario = request.headers.userid;
             const { nome, cep, cidade, uf } = request.body;
     
-            const endereco = await Endereco.create({ 
+            const endereco = await Endereco.create({
+                usuario, 
                 nome,
                 cep,
                 cidade,

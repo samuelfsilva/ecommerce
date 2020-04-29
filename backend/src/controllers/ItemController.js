@@ -17,6 +17,17 @@ module.exports = {
             ativo: Joi.boolean().required()
         })
     }),
+    verificaUpdate: celebrate({
+        [Segments.HEADERS]: Joi.object({
+            userid: Joi.string().required(),
+        }).unknown(),
+        [Segments.BODY]: Joi.object().keys({
+            nome: Joi.string().required(),
+            descricao: Joi.string().required(),
+            valor: Joi.number().required(),
+            categoria: Joi.string().required()
+        })
+    }),
     async index (request, response) {
         try {
             const items = await Item.find().populate(['usuario','categoria']);
@@ -53,14 +64,24 @@ module.exports = {
             return response.status(400).send({ error: 'Erro ao criar um item' });
         }
     },
-    async updateValor(request, response) {
+    async update(request, response) {
         try {
-            const userId = request.params.userId;
-            const { itemId, valor } = request.body;
+            const userId = request.headers.userid;
+            const itemId = request.headers.itemid;
 
-            const item = Item.find({ _id: itemId, usuario: userId });
+            const { nome, descricao, valor, categoria } = request.body;
 
-            if (item) {
+            const itemSearch = Item.find({ _id: itemId, usuario: userId });
+
+            if (itemSearch) {
+                const item = await Item.findByIdAndUpdate(itemId, { 
+                    nome, 
+                    descricao,
+                    categoria
+                });
+
+                await item.save();
+
                 const historicoValor = await HistoricoValor.create({
                     item: itemId,
                     valor
@@ -68,7 +89,7 @@ module.exports = {
     
                 await historicoValor.save();
         
-                return response.status(200).send({ historicoValor });
+                return response.status(200).send({ item });
             } else {
                 return response.status(400).send({ error: 'Nenhum item foi encontrado para este usuário' });
             }

@@ -25,6 +25,8 @@ routes.get('/item', ItemController.index);
 
 routes.post('/item', ItemController.verificaCad, ItemController.create);
 
+routes.put('/item/:itemId', ItemController.verificaUpdate, ItemController.update);
+
 routes.get('/category', CategoriaController.index);
 
 routes.post('/category', CategoriaController.verificaCad, CategoriaController.create);
