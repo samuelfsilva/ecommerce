@@ -19,7 +19,7 @@ uf: {
 },
 usuario: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Usuario',
 },
 createdAt: {
     type: Date,

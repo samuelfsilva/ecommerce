@@ -9,7 +9,7 @@ const FotoSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    codItem: {
+    item: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item',
         required: true,
