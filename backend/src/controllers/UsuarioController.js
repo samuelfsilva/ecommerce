@@ -1,6 +1,6 @@
 const { celebrate, Segments, Joi } = require('celebrate');
 
-const User = require('../models/User');
+const Usuario = require('../models/Usuario');
 
 module.exports = {
     verificaCad: celebrate({
@@ -14,9 +14,9 @@ module.exports = {
     }),
     async index (request, response) {
         try {
-            const user = await User.find();
+            const usuario = await Usuario.find();
     
-            return response.send({ user });
+            return response.send({ usuario });
         } catch (err) {
             return response.status(400).send({ error: 'Erro ao carregar lista de usuários' });
         }
@@ -25,7 +25,7 @@ module.exports = {
         try {
             const { nome, sobrenome, email, sexo, password } = request.body;
     
-            const user = await User.create({ 
+            const usuario = await Usuario.create({ 
                 nome,
                 sobrenome,
                 email,
@@ -33,11 +33,11 @@ module.exports = {
                 password
             });
             
-            await user.save();
+            await usuario.save();
 
-            user.password = undefined;
+            usuario.password = undefined;
             
-            return response.send({ user });
+            return response.send({ usuario });
         } catch (err) {
             if (err.code === 11000){
                 const campo = Object.keys(err.keyPattern)[0];

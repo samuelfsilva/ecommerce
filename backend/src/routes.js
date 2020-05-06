@@ -1,7 +1,7 @@
 const express = require('express');
 
 const ItemController = require('./controllers/ItemController');
-const UserController = require('./controllers/UserController');
+const UsuarioController = require('./controllers/UsuarioController');
 const EnderecoController = require('./controllers/EnderecoController');
 const CategoriaController = require('./controllers/CategoriaController');
 
@@ -13,11 +13,11 @@ routes.get('/', function(request, response) {
 /*
     DADOS PESSOAIS
 */
-routes.get('/user', UserController.index);
+routes.get('/user', UsuarioController.index);
+
+routes.post('/user', UsuarioController.verificaCad, UsuarioController.create);
 
 routes.post('/address', EnderecoController.verificaCad, EnderecoController.create);
-
-routes.post('/user', UserController.verificaCad, UserController.create);
 /*
     PRODUTOS
 */
