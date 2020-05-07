@@ -28,11 +28,27 @@ module.exports = {
             categoria: Joi.string().required()
         })
     }),
+    verificaFind: celebrate({
+        [Segments.PARAMS]: Joi.object().keys({
+            itemId: Joi.string().required().length(24).regex(/^[0-9a-fA-F]+$/),
+        })
+    }),
     async index (request, response) {
         try {
             const items = await Item.find().populate(['usuario','categoria']);
             
             return response.status(200).send({ items });
+        } catch (err) {
+            console.log(err);
+            return response.status(400).send({ error: 'Erro ao carregar lista de itens' });
+        }
+    },
+    async find (request, response) {
+        try {
+            const itemId = request.params.itemId;
+            const item = await Item.find({ _id: itemId }).populate(['usuario','categoria']);
+            
+            return response.status(200).send({ item });
         } catch (err) {
             console.log(err);
             return response.status(400).send({ error: 'Erro ao carregar lista de itens' });

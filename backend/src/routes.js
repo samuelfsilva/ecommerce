@@ -23,6 +23,8 @@ routes.post('/address', EnderecoController.verificaCad, EnderecoController.creat
 */
 routes.get('/item', ItemController.index);
 
+routes.get('/item/:itemId', ItemController.verificaFind, ItemController.find);
+
 routes.post('/item', ItemController.verificaCad, ItemController.create);
 
 routes.put('/item/:itemId', ItemController.verificaUpdate, ItemController.update);
