@@ -12,7 +12,7 @@ module.exports = {
         [Segments.BODY]: Joi.object().keys({
             nome: Joi.string().required(),
             descricao: Joi.string().required(),
-            valor: Joi.number().required(),
+            valor: Joi.number().positive().required(),
             categoria: Joi.string().required(),
             ativo: Joi.boolean().required()
         })
@@ -24,7 +24,7 @@ module.exports = {
         [Segments.BODY]: Joi.object().keys({
             nome: Joi.string().required(),
             descricao: Joi.string().required(),
-            valor: Joi.number().required(),
+            valor: Joi.number().positive().required(),
             categoria: Joi.string().required()
         })
     }),
@@ -67,7 +67,7 @@ module.exports = {
     async update(request, response) {
         try {
             const userId = request.headers.userid;
-            const itemId = request.headers.itemid;
+            const itemId = request.params.itemId;
 
             const { nome, descricao, valor, categoria } = request.body;
 
@@ -86,7 +86,7 @@ module.exports = {
                     item: itemId,
                     valor
                 });
-    
+
                 await historicoValor.save();
         
                 return response.status(200).send({ item });
@@ -94,7 +94,7 @@ module.exports = {
                 return response.status(400).send({ error: 'Nenhum item foi encontrado para este usuário' });
             }
         } catch (err) {
-            return response.status(400).send({ error: 'Erro ao atualizar o valor' });
+            return response.status(400).send({ error: 'Erro ao atualizar o item '+err });
         }
     },
 }
