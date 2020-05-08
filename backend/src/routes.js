@@ -27,6 +27,8 @@ routes.get('/item/:itemId', ItemController.verificaFind, ItemController.find);
 
 routes.post('/item', ItemController.verificaCad, ItemController.create);
 
+routes.post('/itemFoto/:itemId', ItemController.imageMulter, ItemController.insertImagem);
+
 routes.put('/item/:itemId', ItemController.verificaUpdate, ItemController.update);
 
 routes.get('/category', CategoriaController.index);

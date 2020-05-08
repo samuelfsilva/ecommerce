@@ -1,11 +1,15 @@
 const mongoose = require('../database');
 
 const FotoSchema = new mongoose.Schema({
-    descricao: {
+    nome: {
         type: String,
         required: true,
     },
-    caminho: {
+    tamanho: {
+        type: String,
+        required: true,
+    },
+    url: {
         type: String,
         required: true,
     },

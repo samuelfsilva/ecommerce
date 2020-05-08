@@ -1,8 +1,11 @@
 const { celebrate, Segments, Joi } = require('celebrate');
+const multer = require("multer");
+
+const multerConfig = require("./../config/multer");
 
 const Item = require('../models/Item');
 const HistoricoValor = require('../models/HistoricoValor');
-//const generateUniqueId = require('../utils/generateUniqueId');
+const Foto = require('../models/Foto');
 
 module.exports = {
     verificaCad: celebrate({
@@ -33,6 +36,7 @@ module.exports = {
             itemId: Joi.string().required().length(24).regex(/^[0-9a-fA-F]+$/),
         })
     }),
+    imageMulter: multer(multerConfig).single("file"),
     async index (request, response) {
         try {
             const items = await Item.find().populate(['usuario','categoria']);
@@ -112,5 +116,19 @@ module.exports = {
         } catch (err) {
             return response.status(400).send({ error: 'Erro ao atualizar o item '+err });
         }
+    },
+    async insertImagem(request, response) {
+        const { originalname: nome, size: tamanho, key, location: url = "" } = request.file;
+        const item = request.params.itemId;
+
+        const foto = await Foto.create({
+            nome,
+            tamanho,
+            key,
+            url,
+            item
+        });
+
+        return response.json(foto);
     },
 }
