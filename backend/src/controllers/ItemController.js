@@ -114,7 +114,7 @@ module.exports = {
                 return response.status(400).send({ error: 'Nenhum item foi encontrado para este usuário' });
             }
         } catch (err) {
-            return response.status(400).send({ error: 'Erro ao atualizar o item '+err });
+            return response.status(400).send({ error: 'Erro ao atualizar o item ' });
         }
     },
     async insertImagem(request, response) {
@@ -124,7 +124,6 @@ module.exports = {
         const foto = await Foto.create({
             nome,
             tamanho,
-            key,
             url,
             item
         });
